@@ -1,8 +1,6 @@
 package web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import web.dao.UserDAO;
 import web.model.User;
@@ -40,13 +38,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public void update(long id, User updatedUser) {
-
+    public void update(User user) {
+        userDAO.update(user);
     }
 
     @Override
     @Transactional
     public void delete(long id) {
-
+        userDAO.delete(id);
     }
 }

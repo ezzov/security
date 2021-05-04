@@ -16,7 +16,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> getAllUsers() {
-        return entityManager.createQuery("from web.model.User").getResultList();
+        return entityManager.createQuery("from User").getResultList();
     }
 
     @Override
@@ -30,13 +30,13 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void update(long id, User updatedUser) {
-
+    public void update(User user) {
+        entityManager.merge(user);
     }
 
     @Override
     public void delete(long id) {
-
+        entityManager.remove(getUser(id));
     }
 
 
