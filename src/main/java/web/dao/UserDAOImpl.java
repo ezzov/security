@@ -39,5 +39,12 @@ public class UserDAOImpl implements UserDAO {
         entityManager.remove(getUser(id));
     }
 
+    @Override
+    public User loadUserByUsername(String name) {
+        return entityManager.createQuery("select u from User where u.name = :name", User.class)
+                .setParameter("name", name)
+                .getResultList().stream().findAny().orElse(null);
+    }
+
 
 }

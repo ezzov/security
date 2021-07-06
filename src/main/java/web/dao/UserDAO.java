@@ -5,6 +5,7 @@ import web.model.User;
 import java.util.List;
 
 public interface UserDAO {
+
     List<User> getAllUsers();
 
     User getUser(long id);
@@ -14,4 +15,6 @@ public interface UserDAO {
     void update(User user);
 
     void delete(long id);
+
+    User loadUserByUsername(String name);
 }

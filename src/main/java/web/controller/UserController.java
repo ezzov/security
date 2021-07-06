@@ -1,60 +1,82 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import web.model.Role;
 import web.model.User;
+import web.service.RoleService;
 import web.service.UserService;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class UserController {
 
     private UserService userService;
+    private RoleService roleService;
 
     @Autowired
-    public void setUserDAO(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
-    @GetMapping(value = "/users")
+    @GetMapping(value = "/admin/users")
     public String getAllUsers(Model model){
         model.addAttribute("users", userService.getAllUsers());
         return "allusers";
     }
 
-    @GetMapping("user/{id}")
-    public String getUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
+    @GetMapping("/user")
+    public String getUser(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("roles", user.getRoles());
         return "user";
     }
 
-    @GetMapping("/new")
-    public String newPerson(@ModelAttribute("user") User user) {
+    @GetMapping("/admin/new")
+    public String newPerson(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "new";
     }
 
-    @PostMapping("/users")
-    public String create(@ModelAttribute("user") User user) {
+    @PostMapping("/admin/create")
+    public String create(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
+        Set<Role> roleSet = new HashSet<>();
+        for (String role : checkBoxRoles) {
+            roleSet.add(roleService.loadRoleByName(role));
+        }
+        user.setRoles(roleSet);
         userService.save(user);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
-    @GetMapping("/user/{id}/edit")
+    @GetMapping("/admin/edit/{id}")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("roles", roleService.getAllRoles());
         return "update";
     }
 
-    @PatchMapping("/user/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id) {
+    @PatchMapping("/admin/edit")
+    public String update(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
+        Set<Role> roleSet = new HashSet<>();
+        for (String role : checkBoxRoles) {
+            roleSet.add(roleService.loadRoleByName(role));
+        }
+        user.setRoles(roleSet);
         userService.update(user);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/admin/remove/{id}")
     public String delete(@PathVariable("id") int id) {
         userService.delete(id);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 }
