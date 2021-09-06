@@ -45,7 +45,7 @@ public class UserController {
         return "new";
     }
 
-    @PostMapping("/admin/create")
+    @PostMapping("/admin")
     public String create(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
         Set<Role> roleSet = new HashSet<>();
         for (String role : checkBoxRoles) {
