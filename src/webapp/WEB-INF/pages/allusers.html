@@ -16,7 +16,9 @@
     <tr th:each="user : ${users}">
         <td th:text="${user.username}">NAME</td>
         <td><a th:href="@{/admin/edit/{id}(id=${user.id})}">Edit</a></td>
-        <td><a th:href="@{/admin/remove/{id}(id=${user.id})}">Delete</a></td>
+        <td><form th:method="DELETE" th:action="@{/admin/remove/{id}(id=${user.id})}">
+            <input type="submit" value="delete"/>
+        </form> </td>
     </tr>
 </table>
 
