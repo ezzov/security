@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,7 +33,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id")
     )
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
