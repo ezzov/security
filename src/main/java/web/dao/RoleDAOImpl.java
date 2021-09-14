@@ -40,7 +40,7 @@ public class RoleDAOImpl implements RoleDAO{
 
     @Override
     public Role loadRoleByName(String name) {
-        return entityManager.createQuery("select r from Role where r.name = :name", Role.class)
+        return entityManager.createQuery("FROM Role r WHERE r.role = :name", Role.class)
                 .setParameter("name", name)
                 .getResultList().stream().findAny().orElse(null);
     }

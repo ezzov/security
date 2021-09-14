@@ -45,7 +45,7 @@ public class UserController {
         return "new";
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/admin/users")
     public String create(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
         Set<Role> roleSet = new HashSet<>();
         for (String role : checkBoxRoles) {
@@ -63,7 +63,7 @@ public class UserController {
         return "update";
     }
 
-    @PatchMapping("/admin/edit")
+    @PatchMapping("/admin/edit/{id}")
     public String update(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
         Set<Role> roleSet = new HashSet<>();
         for (String role : checkBoxRoles) {
