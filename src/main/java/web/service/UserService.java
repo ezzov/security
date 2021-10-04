@@ -9,9 +9,9 @@ public interface UserService {
 
     User getUser(long id);
 
-    void save(User user);
+    void save(User user, List<String> roles);
 
-    void update(User user);
+    void update(User user, List<String> roles);
 
     void delete(long id);
 }
