@@ -11,6 +11,7 @@ import web.service.RoleService;
 import web.service.UserService;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -46,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping("/admin/users")
-    public String create(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
+    public String create(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") List<String> checkBoxRoles) {
         Set<Role> roleSet = new HashSet<>();
         for (String role : checkBoxRoles) {
             roleSet.add(roleService.loadRoleByName(role));

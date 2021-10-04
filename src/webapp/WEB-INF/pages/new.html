@@ -19,8 +19,8 @@
   <label for="age">Enter password: </label>
   <input type="text" th:field="*{password}" id="password"/>
   <br/>
-  <input type="checkbox" name="checkBoxRoles" value="ROLE_USER"/>USER
-  <input type="checkbox" name="checkBoxRoles" value="ROLE_ADMIN"/>ADMIN
+  <input type="checkbox" name=roles[] value="ROLE_USER" checked/>USER
+  <input type="checkbox" name=roles[] value="ROLE_ADMIN"/>ADMIN
   <br/>
   <input type="submit" value="Create!"/>
 </form>
