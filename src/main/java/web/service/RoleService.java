@@ -3,6 +3,7 @@ package web.service;
 import web.model.Role;
 
 import java.util.List;
+import java.util.Set;
 
 public interface RoleService {
 
@@ -17,4 +18,6 @@ public interface RoleService {
     void deleteRole(long id);
 
     Role loadRoleByName(String name);
+
+    Set<Role> makeSet(String[] roles);
 }

@@ -47,8 +47,9 @@ public class UserController {
     }
 
     @PostMapping("/admin/users")
-    public String create(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") List<String> checkBoxRoles) {
-        userService.save(user, checkBoxRoles);
+    public String create(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
+        user.setRoles(roleService.makeSet(checkBoxRoles));
+        userService.save(user);
         return "redirect:/admin/users";
     }
 
@@ -66,7 +67,7 @@ public class UserController {
             roleSet.add(roleService.loadRoleByName(role));
         }
         user.setRoles(roleSet);
-        userService.update(user, checkBoxRoles);
+        userService.update(user);
         return "redirect:/admin/users";
     }
 

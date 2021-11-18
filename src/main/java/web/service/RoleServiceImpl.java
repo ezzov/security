@@ -7,7 +7,9 @@ import web.dao.RoleDAO;
 import web.model.Role;
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RoleServiceImpl implements RoleService{
@@ -53,5 +55,14 @@ public class RoleServiceImpl implements RoleService{
     @Transactional
     public Role loadRoleByName(String name) {
         return roleDAO.loadRoleByName(name);
+    }
+
+    @Override
+    public Set<Role> makeSet(String[] roles) {
+        Set<Role> roleSet = new HashSet<>();
+        for (String role : roles) {
+            roleSet.add(roleDAO.loadRoleByName(role));
+        }
+        return roleSet;
     }
 }

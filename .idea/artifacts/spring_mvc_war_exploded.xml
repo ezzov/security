@@ -57,6 +57,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.14.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.14.RELEASE" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.9.6" />
+          <element id="library" level="project" name="Maven: org.jetbrains:annotations:23.0.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">

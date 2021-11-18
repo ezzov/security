@@ -8,12 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.RoleDAO;
 import web.dao.UserDAO;
-import web.model.Role;
 import web.model.User;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -40,18 +37,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void save(User user, List<String> roles) {
-        Set<Role> resultList = new HashSet<>();
-        for(String name: roles){
-            resultList.add(roleDAO.loadRoleByName(name));
-        }
-        user.setRoles(resultList);
+    public void save(User user) {
         userDAO.save(user);
     }
 
     @Override
     @Transactional
-    public void update(User user, List<String> roles) {
+    public void update(User user) {
         userDAO.update(user);
     }
 
