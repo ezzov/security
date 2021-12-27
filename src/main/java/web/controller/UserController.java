@@ -5,14 +5,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import web.model.Role;
 import web.model.User;
 import web.service.RoleService;
 import web.service.UserService;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Controller
 public class UserController {
@@ -48,8 +43,7 @@ public class UserController {
 
     @PostMapping("/admin/users")
     public String create(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
-        user.setRoles(roleService.makeSet(checkBoxRoles));
-        userService.save(user);
+        userService.save(user, checkBoxRoles);
         return "redirect:/admin/users";
     }
 
@@ -61,13 +55,8 @@ public class UserController {
     }
 
     @PatchMapping("/admin/edit/{id}")
-    public String update(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") List<String> checkBoxRoles) {
-        Set<Role> roleSet = new HashSet<>();
-        for (String role : checkBoxRoles) {
-            roleSet.add(roleService.loadRoleByName(role));
-        }
-        user.setRoles(roleSet);
-        userService.update(user);
+    public String update(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
+        userService.update(user, checkBoxRoles);
         return "redirect:/admin/users";
     }
 
