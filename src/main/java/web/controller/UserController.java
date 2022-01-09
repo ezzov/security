@@ -47,9 +47,9 @@ public class UserController {
         return "redirect:/admin/users";
     }
 
-    @GetMapping("/admin/edit/{id}")
-    public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userService.getUser(id));
+    @GetMapping("/admin/edit/{userId}")
+    public String edit(Model model, @PathVariable("userId") int userId) {
+        model.addAttribute("user", userService.getUser(userId));
         model.addAttribute("roles", roleService.getAllRoles());
         return "update";
     }
@@ -60,9 +60,9 @@ public class UserController {
         return "redirect:/admin/users";
     }
 
-    @DeleteMapping("/admin/remove/{id}")
-    public String delete(@PathVariable("id") int id) {
-        userService.delete(id);
+    @DeleteMapping("/admin/remove/{userId}")
+    public String delete(@PathVariable("userId") int userId) {
+        userService.delete(userId);
         return "redirect:/admin/users";
     }
 }
